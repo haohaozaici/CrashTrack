@@ -29,7 +29,7 @@ public class App extends Application {
       public void uncaughtException(Thread t, Throwable e) {
 //        e.printStackTrace();
         Log.i("uncaughtException", "uncaughtException: " + e.getMessage());
-//        ProcessPhoenix.triggerRebirth(getApplicationContext());
+        ProcessPhoenix.triggerRebirth(getApplicationContext());
 
 //        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -41,6 +41,7 @@ public class App extends Application {
     CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
 
     strategy.setDeviceID(Build.SERIAL); //机器号
+    strategy.setDeviceID("222"); //机器号
 
     CrashReport.setIsDevelopmentDevice(getApplicationContext(), BuildConfig.DEBUG);
 
@@ -58,12 +59,15 @@ public class App extends Application {
 
     CrashReport.initCrashReport(getApplicationContext(), "55d87caf1c", BuildConfig.DEBUG, strategy);
 
-    CrashReport.setUserId("haoyuan");
+    CrashReport.setUserId(Build.SERIAL);
 
     CrashReport.setAppChannel(this, "haohaozaici");
-    CrashReport.setAppVersion(this, BuildConfig.VERSION_CODE + "");
+//    CrashReport.setAppVersion(this, BuildConfig.VERSION_CODE + "");
 
     //配置关键信息
+    // 最多可以有9对自定义的key-value（超过则添加失败）；
+    // key限长50字节，value限长200字节，过长截断；
+    // key必须匹配正则：[a-zA-Z[0-9]]+。
     CrashReport.putUserData(this, "merchantNo", "123456");
 //    CrashReport.putUserData(this, "", "");
 //    CrashReport.putUserData(this, "", "");
